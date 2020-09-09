@@ -5,7 +5,7 @@ LIMIT = 50
 URL = f"https://kr.indeed.com/%EC%B7%A8%EC%97%85?as_and=python&as_phr=&as_any=&as_not=&as_ttl=&as_cmp=&jt=all&st=&radius=25&l=&fromage=any&limit={LIMIT}"
 
 
-def extract_indeed_pages():
+def get_last_page():
     result = requests.get(
         URL)
 
@@ -37,7 +37,7 @@ def extract_job(html):
     return {'title': title, 'company': company, "location": location, "link": f"https://kr.indeed.com/%EC%B7%A8%EC%97%85?q=python&l&radius=25&vjk={job_id}"}
 
 
-def extract_indeed_jobs(last_page):
+def extract_jobs(last_page):
     jobs = []
     for page in range(last_page):
         print(f"Scrapping page {page}")
@@ -47,4 +47,10 @@ def extract_indeed_jobs(last_page):
         for result in results:
             job = extract_job(result)
             jobs.append(job)
+    return jobs
+
+
+def get_jobs():
+    last_page = get_last_page()
+    jobs = extract_jobs(last_page)
     return jobs
