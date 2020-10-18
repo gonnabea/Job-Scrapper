@@ -20,7 +20,6 @@ def extract_job(html):
     company = company.get_text(strip=True)
     location = location.get_text(strip=True)
     job_id = html['data-jobid']
-    print(title)
     return {
         'title': title,
         'company': company,
@@ -33,6 +32,7 @@ def extract_jobs(last_page):
     jobs = []
 
     for page in range(last_page):
+        print(f"스택오버플로우 스크랩핑중... (page: {page})")
         result = requests.get(
             f"{URL}&so_source=JobSearch&so_medium=Internal&pg={page+1}")
 
@@ -49,4 +49,5 @@ def extract_jobs(last_page):
 def get_jobs():
     last_page = get_last_page()
     jobs = extract_jobs(last_page)
+    print(jobs)
     return jobs
