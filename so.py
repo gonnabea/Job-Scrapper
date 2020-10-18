@@ -30,7 +30,8 @@ def extract_job(html):
 
 def extract_jobs(last_page):
     jobs = []
-
+    if last_page > 50:
+        last_page = 50
     for page in range(last_page):
         print(f"스택오버플로우 스크랩핑중... (page: {page})")
         result = requests.get(
