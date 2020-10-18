@@ -33,7 +33,8 @@ def extract_jobs(last_page):
     jobs = []
 
     for page in range(last_page):
-        result = requests.get(f"{URL}$pg=page+1")
+        result = requests.get(
+            f"{URL}&so_source=JobSearch&so_medium=Internal&pg={page+1}")
 
         soup = BeautifulSoup(result.text, "html.parser")
 
