@@ -2,15 +2,18 @@ import requests
 from bs4 import BeautifulSoup
 
 
-URL = f"https://stackoverflow.com/jobs?q=python"
-
-
-def get_last_page():
+def get_last_page(URL):
     result = requests.get(URL)
     soup = BeautifulSoup(result.text, 'html.parser')
 
     page = soup.findAll("a", {"class", "s-pagination--item"})
-    last_page = page[-2].get_text(strip=True)
+    last_page = 0
+    if(len(page) > 2):
+        last_page = page[-2].get_text(strip=True)
+    elif len(page) == 1:
+        last_page = 1
+    else:
+        pass
     return int(last_page)
 
 
@@ -28,12 +31,12 @@ def extract_job(html):
     }
 
 
-def extract_jobs(last_page):
+def extract_jobs(last_page, URL):
     jobs = []
-    if last_page > 50:
+    if last_page > 50:  # 50페이지로 제한
         last_page = 50
     for page in range(last_page):
-        print(f"스택오버플로우 스크랩핑중... (page: {page})")
+        print(f"스택오버플로우 스크래핑중... (page: {page})")
         result = requests.get(
             f"{URL}&so_source=JobSearch&so_medium=Internal&pg={page+1}")
 
@@ -47,8 +50,10 @@ def extract_jobs(last_page):
     return jobs
 
 
-def get_jobs():
-    last_page = get_last_page()
-    jobs = extract_jobs(last_page)
+def get_jobs(word):
+    URL = f"https://stackoverflow.com/jobs?q={word}"
+
+    last_page = get_last_page(URL)
+    jobs = extract_jobs(last_page, URL)
     print(jobs)
     return jobs
