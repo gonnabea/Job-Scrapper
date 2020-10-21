@@ -24,17 +24,18 @@ def get_last_page(URL):
 def extract_job(html):
     title = html.find("h2", {"class": "title"}).find("a")["title"]
     company = html.find("span", {"class": "company"})
-    company_anchor = company.find("a")
-    if company_anchor is not None:
-        company = company_anchor.string
-    else:
-        company = company.string
     if company:
-        company = company.strip()
-    location = html.find("div", {"class": "recJobLoc"})["data-rc-loc"]
-    job_id = html["data-jk"]
+        company_anchor = company.find("a")
+        if company_anchor is not None:
+            company = company_anchor.string
+        else:
+            company = company.string
+        if company:
+            company = company.strip()
+        location = html.find("div", {"class": "recJobLoc"})["data-rc-loc"]
+        job_id = html["data-jk"]
 
-    return {'title': title, 'company': company, "location": location, "link": f"https://kr.indeed.com/%EC%B7%A8%EC%97%85?q=python&l&radius=25&vjk={job_id}"}
+        return {'title': title, 'company': company, "location": location, "link": f"https://kr.indeed.com/%EC%B7%A8%EC%97%85?q=python&l&radius=25&vjk={job_id}"}
 
 
 def extract_jobs(last_page, URL):
