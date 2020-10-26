@@ -15,5 +15,5 @@ def get_jobs(word):
         jobs = indeed_jobs
     else:
         jobs = so_jobs
-    save_to_file(jobs)  # 스크래핑 실행
+    save_to_file(jobs, word)  # 스크래핑 실행
     return jobs

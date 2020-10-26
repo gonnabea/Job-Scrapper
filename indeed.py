@@ -35,7 +35,7 @@ def extract_job(html):
         location = html.find("div", {"class": "recJobLoc"})["data-rc-loc"]
         job_id = html["data-jk"]
 
-        return {'title': title, 'company': company, "location": location, "link": f"https://kr.indeed.com/%EC%B7%A8%EC%97%85?q=python&l&radius=25&vjk={job_id}"}
+        return {'title': title, 'company': company, "location": location, "apply_link": f"https://kr.indeed.com/%EC%B7%A8%EC%97%85?q=python&l&radius=25&vjk={job_id}"}
 
 
 def extract_jobs(last_page, URL):
